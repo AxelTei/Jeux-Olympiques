@@ -22,7 +22,7 @@ export default function HomeArticleSection() {
             </div>
             <div className="grid content-center border border-solid border-gray-400">
                 <h1 className="mb-6 ml-4 sm:ml-12 text-2xl font-medium mt-4 sm:mt-0">Paris 2024</h1>
-                <p className="lg:w-80 sm:w-45 w-80 ml-4 sm:ml-12">Que vous soyez seul, accompagné ou en famille, les Jeux Olympiques 2024 de Paris vous ouvre ses portes</p>
+                <p className="lg:w-80 sm:w-45 w-80 ml-4 sm:ml-12">Que vous soyez seul, accompagné ou en famille, les Jeux Olympiques 2024 de Paris vous ouvre ses portes !</p>
                 <p className="lg:w-80 sm:w-45 w-80 ml-4 sm:ml-12 mb-6">Parcourez nos multiples Offres en cliquant sur le bouton ci-dessous.</p>
                 <button className="ml-4 sm:ml-12 text-lg bg-[#d7c378] hover:bg-white rounded-md border border-solid border-gray-300 w-48 sm:w-48 h-10 mb-6">Billetterie</button>
             </div>
