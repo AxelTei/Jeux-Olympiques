@@ -1,9 +1,11 @@
 'use client';
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Page() {
     const [form, setForm] = useState({ username: '', alias: '', password: '' });
     const [message, setMessage] = useState('');
+    const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,8 +23,8 @@ export default function Page() {
         });
 
         if (res.ok) {
-            setMessage('Compte créé avec succès !');
             setForm({ username: '', password: '', alias: ''});
+            router.push('/Login?success=true&message=Votre%20compte%20a%20%C3%A9t%C3%A9%20cr%C3%A9%C3%A9%20avec%20succ%C3%A8s')
         } else {
             const error = await res.text();
             setMessage(`Erreur: ${error}`)

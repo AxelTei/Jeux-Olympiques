@@ -39,7 +39,7 @@ export default function Navbar() {
                     <Link href="/NosOffres" className="mx-2 hover:text-black flex items-center">Nos Offres</Link>
                     <Link href="#" className="mx-2 hover:text-black flex items-center">Contact</Link>
                     <Link href="#" className="mx-2 hover:text-black flex items-center">Panier</Link>
-                    <Link href="#" className="mx-2 bg-blue-100 text-black rounded-full w-32 h-10 flex items-center justify-center md:ml-10">Connexion</Link>{/*En attente de se transformer en composant */}
+                    <Link href="/Login" className="mx-2 bg-blue-100 text-black rounded-full w-32 h-10 flex items-center justify-center md:ml-10">Connexion</Link>{/*En attente de se transformer en composant */}
                 </div>
 
                 <div className="md:hidden flex items-center">
