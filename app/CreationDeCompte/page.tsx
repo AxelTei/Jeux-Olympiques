@@ -1,59 +1,64 @@
 'use client';
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 
 export default function Page() {
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [error, setError] = useState<string | null>(null)
+    const [form, setForm] = useState({ username: '', alias: '', password: '' });
+    const [message, setMessage] = useState('');
 
-    async function onSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault()
-        setIsLoading(true)
-        setError(null) // Clear previous errors when a new request starts
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    }
 
-        try {
-            const formData = new FormData(event.currentTarget)
-            const response = await fetch('http://localhost:8081/auth/signup', {
-                method: 'POST',
-                body: formData
-            })
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
-            if (!response.ok) {
-                throw new Error("Failed to submit the data. Please try again.")
-            }
+        const res = await fetch('http://localhost:8080/auth/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form),
+        });
 
-            //Handle response if necessary
-            //const data = await response.json()
-            // ...
-        } catch (error) {
-            //Capture the error message to display to the user
-            setError(error.message)
-            console.error(error)
-        } finally {
-            setIsLoading(false)
+        if (res.ok) {
+            setMessage('Compte créé avec succès !');
+            setForm({ username: '', password: '', alias: ''});
+        } else {
+            const error = await res.text();
+            setMessage(`Erreur: ${error}`)
         }
     }
 
     return (
         <div>
             <h1>Création de Compte</h1>
-            {error && <div style={{color: 'red'}}>{error}</div>}
-            <form onSubmit={onSubmit}>
-                <label htmlFor="alias">
-                    Nom et Prénom :
-                    <input id="alias" type="text" name="alias"/>
-                </label>
-                <label htmlFor="username">
-                    Email :
-                    <input id="username" type="email" name="username"/>
-                </label>
-                <label htmlFor="password">
-                    Mot de passe :
-                    <input id="password" type="password" name="password"/>
-                </label>
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? 'Loading...' : 'Submit'}
-                </button>
+            <form onSubmit={handleSubmit}>
+                <input
+                    name="username"
+                    placeholder="Email"
+                    type="email"
+                    value={form.username}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    name="alias"
+                    placeholder="Nom et Prénom"
+                    value={form.alias}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    name="password"
+                    placeholder="Mot de passe"
+                    type="password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                />
+                <button>S&apos;inscrire</button>
             </form>
+            {message && <p>{message}</p>}
         </div>
-    )
+    );
 }
