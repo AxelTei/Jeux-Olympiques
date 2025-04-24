@@ -38,6 +38,24 @@ export default function Page() {
         }
     }
 
+    const handleSubmitAdmin = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const res = await fetch('http://localhost:8080/auth/signupAdmin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+    
+        if (res.ok) {
+            router.push('/Login?success=true&message=Votre%20compte%20a%20%C3%A9t%C3%A9%20cr%C3%A9%C3%A9%20avec%20succ%C3%A8s')
+        } else {
+            const error = await res.text();
+            setMessage(`Erreur: ${error}`)
+        }
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -145,6 +163,10 @@ export default function Page() {
                             </button>
                         </div>
                     </form>
+                    <button
+                        className="mt-6 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        onClick={handleSubmitAdmin}
+                    >Enregistrer Admin</button>
                 </div>
             </div>
         </div>
