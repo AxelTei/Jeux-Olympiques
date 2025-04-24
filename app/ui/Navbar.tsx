@@ -1,10 +1,31 @@
 'use client';
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { logoutUser } from '../services/authService';
 
 export default function Navbar() {
+    const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        setIsLoggedIn(!!token);
+    }, []);
+
+    const handleAuth = () => {
+        if (isLoggedIn) {
+            //Déconnexion: supprimer le token et mettre à jour l'état
+            logoutUser();
+            setIsLoggedIn(false);
+            //Retour Accueil
+            router.push('/?success=true&message=Vous%20%C3%AAtes%20maintenant%20d%C3%A9connect%C3%A9')
+        } else {
+            router.push('/Login');
+        }
+    }
 
     function getMenuClasses(){
         let menuCLasses: string[] = [];
@@ -38,8 +59,8 @@ export default function Navbar() {
                     <Link href="/" className="mx-2 hover:text-black flex items-center">Accueil</Link>
                     <Link href="/NosOffres" className="mx-2 hover:text-black flex items-center">Nos Offres</Link>
                     <Link href="#" className="mx-2 hover:text-black flex items-center">Contact</Link>
-                    <Link href="#" className="mx-2 hover:text-black flex items-center">Panier</Link>
-                    <Link href="/Login" className="mx-2 bg-blue-100 text-black rounded-full w-32 h-10 flex items-center justify-center md:ml-10">Connexion</Link>{/*En attente de se transformer en composant */}
+                    {isLoggedIn && (<Link href="#" className="mx-2 hover:text-black flex items-center">Panier</Link>)}
+                    <button onClick={handleAuth} className="mx-2 bg-blue-100 text-black rounded-full w-32 h-10 flex items-center justify-center md:ml-10">{isLoggedIn ? 'Déconnexion' : 'Connexion'}</button>
                 </div>
 
                 <div className="md:hidden flex items-center">

@@ -4,11 +4,15 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { loginUser } from '../services/authService';
 
 export default function Page() {
     const [notification, setNotification] = useState(null);
     const searchParams = useSearchParams();
-    const [form, setForm] = useState({ username: '', password: '' });
+    // const [form, setForm] = useState({ username: '', password: '' });
+    // const [error, setError] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
 
@@ -28,27 +32,17 @@ export default function Page() {
         }
     }, [searchParams]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    }
-
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
 
-        const res = await fetch('http://localhost:8080/auth/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(form),
-        });
-    
-        if (res.ok) {
-            setForm({ username: '', password: '' });
+        const result = await loginUser(username, password);
+
+        if (result.success) {
+            window.location.reload();
             router.push('/?success=true&message=Vous%20%C3%AAtes%20maintenant%20connect%C3%A9')
         } else {
-            const error = await res.text();
-            setError(`Erreur: ${error}`)
+            setError(result.message);
         }
     }
 
@@ -80,12 +74,15 @@ export default function Page() {
                                 Email
                             </label>
                             <div className="mt-1">
-                                <input 
+                                <input
+                                    id="username"
                                     name="username"
                                     placeholder="Email"
                                     type="email"
-                                    value={form.username}
-                                    onChange={handleChange}
+                                    // value={form.username}
+                                    // onChange={handleChange}
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
                                     required
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 />
@@ -97,12 +94,15 @@ export default function Page() {
                                 Mot de passe
                             </label>
                             <div>
-                                <input 
+                                <input
+                                    id="password"
                                     name="password"
                                     placeholder="Mot de passe"
                                     type="password"
-                                    value={form.password}
-                                    onChange={handleChange}
+                                    // value={form.password}
+                                    // onChange={handleChange}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     required
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 />
