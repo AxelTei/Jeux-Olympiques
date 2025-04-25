@@ -60,6 +60,7 @@ export default function Navbar() {
                     <Link href="/NosOffres" className="mx-2 hover:text-black flex items-center">Nos Offres</Link>
                     <Link href="#" className="mx-2 hover:text-black flex items-center">Contact</Link>
                     {isLoggedIn && (<Link href="#" className="mx-2 hover:text-black flex items-center">Panier</Link>)}
+                    <Link href="/GestionDesOffres" className="mx-2 hover:text-black flex items-center">Gestion des Offres</Link>
                     <button onClick={handleAuth} className="mx-2 bg-blue-100 text-black rounded-full w-32 h-10 flex items-center justify-center md:ml-10">{isLoggedIn ? 'Déconnexion' : 'Connexion'}</button>
                 </div>
 
