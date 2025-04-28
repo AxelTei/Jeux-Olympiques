@@ -48,7 +48,7 @@ export default function Page() {
                 throw new Error(data.message || 'Une erreur est survenue lors de la création de votre offre')
             }
 
-            router.push('/NosOffres?success=true')
+            router.push('/NosOffres');
         } catch (err) {
             console.error('Erreur lors de la soumission:', err);
             setError(err.message || 'Une erreur est survenue, veuillez réessayer');
@@ -124,6 +124,7 @@ export default function Page() {
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                     <div className='flex justify-end pt-5'>
+                        <p className='text-gray-500'>Vous pouvez supprimer ou modifier l&apos;offre directement sur la page de détails de l&apos;offre.</p>
                         <button
                             type="submit"
                             disabled={isSubmitting}
