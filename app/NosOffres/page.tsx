@@ -3,16 +3,19 @@ import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getRole } from "../services/authService";
+import { getRole, getAuthToken } from "../services/authService";
 
 export default function Page() {
     const router = useRouter();
     const [offers, setOffers] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
+        const token = getAuthToken();
+        setIsLoggedIn(!!token);
         const role = getRole();
         if (role === '["ROLE_ADMIN"]') {
             setIsAdmin(!!role);
@@ -52,12 +55,12 @@ export default function Page() {
 
             <div className="mb-6 flex justify-between items-center">
                 <h1 className="text-3xl font-bold text-gray-900">Nos Offres</h1>
-                {isAdmin && <Link
+                {isAdmin && (<Link
                     href="GestionDesOffres"
                     className="inline-flex items-center px-4 py-2 border border-transparent rounded-sm shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     Ajouter une offre
-                </Link>}
+                </Link>)}
                 {/* Lien à protéger pour admin seulement */}
             </div>
 
@@ -95,11 +98,11 @@ export default function Page() {
                                     >
                                         Détails
                                     </button>
-                                    <button
+                                    {isLoggedIn && (<button
                                         className="flex-1 text-center py-2 bg-indigo-600 rounded text-sm text-white hover:bg-indigo-700"
                                     >
                                         Ajouter au panier
-                                    </button>
+                                    </button>) || (<p className="flex-1 text-center text-sm text-gray-600">Vous devez créer un compte et vous connectez pour ajouter une offre à votre panier.</p>)}
                                 </div>
                             </div>
                         </div>

@@ -14,9 +14,12 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
     const [error, setError] = useState('');
     const token = getAuthToken();
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         if (!id) return;
+        const token = getAuthToken();
+        setIsLoggedIn(!!token);
         const role = getRole();
         if (role === '["ROLE_ADMIN"]') {
             setIsAdmin(!!role);
@@ -132,17 +135,17 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
                                         <span className='text-2xl font-bold text-gray-900'>{offer.price} €</span>
                                     </div>
 
-                                    <div className='space-y-3'>
+                                    {isLoggedIn && (<div className='space-y-3'>
                                         <button className='w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition-colors'>
                                             Ajouter au panier
                                         </button>
-                                    </div>
+                                    </div>) || (<p className="flex-1 text-center text-sm text-gray-600">Vous devez créer un compte et vous connectez pour ajouter une offre à votre panier.</p>)}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {isAdmin && <div className='border-t border-gray-200 px-4 py-4 sm:px-6 flex justify-between'>
+                    {isAdmin && (<div className='border-t border-gray-200 px-4 py-4 sm:px-6 flex justify-between'>
                         <Link
                             href={`/offres/${offer.bookingOfferId}/edit`}
                             className='text-indigo-600 hover:text-indigo-800'
@@ -160,7 +163,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
                         >
                             Supprimer
                         </button>
-                    </div>}
+                    </div>)}
                 </div>
             ) : null}
         </div>
