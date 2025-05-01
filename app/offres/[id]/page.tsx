@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { use } from 'react';
 import { useRouter } from 'next/navigation';
-import { getAuthToken } from '@/app/services/authService';
+import { getAuthToken, getRole } from '@/app/services/authService';
 
 export default function Page({ params }: {params: Promise<{id: string}>}) {
     const router = useRouter();
@@ -13,10 +13,14 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const token = getAuthToken();
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         if (!id) return;
-
+        const role = getRole();
+        if (role === '["ROLE_ADMIN"]') {
+            setIsAdmin(!!role);
+        }
         const fetchOfferDetail = async () => {
             try {
                 const response = await fetch(`http://localhost:8080/api/bookingOffer/${id}`, {
@@ -138,7 +142,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
                         </div>
                     </div>
 
-                    <div className='border-t border-gray-200 px-4 py-4 sm:px-6 flex justify-between'>
+                    {isAdmin && <div className='border-t border-gray-200 px-4 py-4 sm:px-6 flex justify-between'>
                         <Link
                             href={`/offres/${offer.bookingOfferId}/edit`}
                             className='text-indigo-600 hover:text-indigo-800'
@@ -156,7 +160,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
                         >
                             Supprimer
                         </button>
-                    </div>
+                    </div>}
                 </div>
             ) : null}
         </div>

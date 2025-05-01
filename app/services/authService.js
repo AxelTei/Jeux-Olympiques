@@ -41,7 +41,18 @@ export const loginUser = async (username, password) => {
 export const getAuthToken = () => {
     //Vérification si window existe (important pour Next.js qui fait du SSR)
     if (typeof window !== 'undefined') {
-        return localStorage.getItem('authToken')
+        return localStorage.getItem('authToken');
+    }
+    return null;
+};
+
+/**
+ * Récupère le role de l'utilisateur connecté
+ * @returns {string|null} Le role de l'utilisateur ou null s'il n'existe pas
+ */
+export const getRole = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('userRole');
     }
     return null;
 };
@@ -53,7 +64,7 @@ export const getAuthToken = () => {
 export const isAuthenticated = () => {
     const token = getAuthToken();
     return !!token; // Convertit en booléen (true si token existe, false sinon)
-}
+};
 
 /**
  * Récupère les données de l'utilisateur stockées dans le localStorage
@@ -65,7 +76,7 @@ export const getUserData = () => {
         return userData ? JSON.parse(userData) : null;
     }
     return null;
-}
+};
 
 /**
  * Déconnecte l'utilisateur en supprimant les données d'authentification
@@ -96,4 +107,4 @@ export const logoutUser = async () => {
             return { success: false, message: 'La déconnexion au serveur a échoué'};
         }
     }
-}
+};

@@ -3,14 +3,20 @@ import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { getRole } from "../services/authService";
 
 export default function Page() {
     const router = useRouter();
     const [offers, setOffers] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
+        const role = getRole();
+        if (role === '["ROLE_ADMIN"]') {
+            setIsAdmin(!!role);
+        }
         const fetchOffers = async () => {
             try {
                 const response = await fetch("http://localhost:8080/api/bookingOffer", {
@@ -46,12 +52,12 @@ export default function Page() {
 
             <div className="mb-6 flex justify-between items-center">
                 <h1 className="text-3xl font-bold text-gray-900">Nos Offres</h1>
-                <Link
+                {isAdmin && <Link
                     href="GestionDesOffres"
                     className="inline-flex items-center px-4 py-2 border border-transparent rounded-sm shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     Ajouter une offre
-                </Link>
+                </Link>}
                 {/* Lien à protéger pour admin seulement */}
             </div>
 

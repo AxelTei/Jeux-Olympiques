@@ -4,16 +4,21 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { logoutUser } from '../services/authService';
-import { getAuthToken } from "../services/authService";
+import { getAuthToken, getRole } from "../services/authService";
 
 export default function Navbar() {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const token = getAuthToken();
         setIsLoggedIn(!!token);
+        const role = getRole();
+        if (role === '["ROLE_ADMIN"]') {
+            setIsAdmin(!!role);
+        }
     }, []);
 
     const handleAuth = () => {
@@ -21,6 +26,7 @@ export default function Navbar() {
             //Déconnexion: supprimer le token et mettre à jour l'état
             logoutUser();
             setIsLoggedIn(false);
+            setIsAdmin(false);
             //Retour Accueil
             router.push('/?success=true&message=Vous%20%C3%AAtes%20maintenant%20d%C3%A9connect%C3%A9')
         } else {
@@ -61,7 +67,7 @@ export default function Navbar() {
                     <Link href="/NosOffres" className="mx-2 hover:text-black flex items-center">Nos Offres</Link>
                     <Link href="#" className="mx-2 hover:text-black flex items-center">Contact</Link>
                     {isLoggedIn && (<Link href="#" className="mx-2 hover:text-black flex items-center">Panier</Link>)}
-                    <Link href="/GestionDesOffres" className="mx-2 hover:text-black flex items-center">Gestion des Offres</Link>
+                    {isAdmin && (<Link href="/GestionDesOffres" className="mx-2 hover:text-black flex items-center">Gestion des Offres</Link>)}
                     <button onClick={handleAuth} className="mx-2 bg-blue-100 text-black rounded-full w-32 h-10 flex items-center justify-center md:ml-10">{isLoggedIn ? 'Déconnexion' : 'Connexion'}</button>
                 </div>
 
