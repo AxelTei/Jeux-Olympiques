@@ -16,8 +16,8 @@ export const loginUser = async (username, password) => {
 
         const data = await response.json();
 
-        if (response.ok && data.accessToken) {
-            localStorage.setItem('authToken', data.accessToken);
+        if (response.ok && data.token) {
+            localStorage.setItem('authToken', (data.token));
             if (data.id) {
                 localStorage.setItem('userId', JSON.stringify(data.id))
                 localStorage.setItem('userData', JSON.stringify(data.username))

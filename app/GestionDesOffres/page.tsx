@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Head from 'next/head';
+import { getAuthToken } from '../services/authService';
 
 export default function Page() {
     const router = useRouter();
@@ -13,6 +14,8 @@ export default function Page() {
         price: '',
         numberOfCustomers: '',
     });
+    const token = getAuthToken();
+    console.log(token);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,10 +39,12 @@ export default function Page() {
 
             const response = await fetch('http://localhost:8080/api/bookingOffer', {
                 method: 'POST',
+                body: JSON.stringify(offerData),
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
                 },
-                body: JSON.stringify(offerData)
+                credentials: 'include'
             });
 
             const data = await response.json();

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { use } from 'react';
+import { getAuthToken } from '@/app/services/authService';
 
 interface Offer {
     bookingOfferId: string;
@@ -18,6 +19,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [isSaving, setIsSaving] = useState(false);
+    const token = getAuthToken();
 
     useEffect(() => {
         const fetchOffer = async () => {
@@ -71,8 +73,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Ajouter ici les headers d'authentification nécessaire
-                    // 'Autorization': `Bearer ${token}`
+                    'Authorization': 'Bearer ' + token,
                 },
                 body: JSON.stringify(offer),
             });

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { logoutUser } from '../services/authService';
+import { getAuthToken } from "../services/authService";
 
 export default function Navbar() {
     const router = useRouter();
@@ -11,7 +12,7 @@ export default function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
+        const token = getAuthToken();
         setIsLoggedIn(!!token);
     }, []);
 

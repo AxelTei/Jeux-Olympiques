@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { use } from 'react';
 import { useRouter } from 'next/navigation';
+import { getAuthToken } from '@/app/services/authService';
 
 export default function Page({ params }: {params: Promise<{id: string}>}) {
     const router = useRouter();
@@ -11,9 +12,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
     const [offer, setOffer] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-
-    // Finir la page détails, faire crud, sécurisé accès au crud seulement avec role admin, sécurisé requetes spring boot seulement token et role admin, faire tous les test
-    // Utiliser Postman, Fin US4
+    const token = getAuthToken();
 
     useEffect(() => {
         if (!id) return;
@@ -46,6 +45,28 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
 
         fetchOfferDetail();
     }, [id]);
+
+    async function deleteOffer(id: string): Promise<boolean> {
+        try {
+            const response = await fetch(`http://localhost:8080/api/bookingOffer/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                },
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
+            return true;
+        } catch (error) {
+            console.error('Échec lors de la suppression de l\'offre:', error);
+            return false;
+        }
+    };
 
     return (
         <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
@@ -128,7 +149,8 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
                             className='text-red-600 hover:text-red-800'
                             onClick={() => {
                                 if (window.confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')) {
-                                    //requetes deleteProduct(product.id) then message de succès ou erreur then router.push('/NosOffres');
+                                    deleteOffer(id);
+                                    router.push("/NosOffres");
                                 }
                             }}
                         >
