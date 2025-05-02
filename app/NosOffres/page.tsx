@@ -3,7 +3,7 @@ import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getRole, getAuthToken } from "../services/authService";
+import { getRole, getAuthToken, getUserKey } from "../services/authService";
 
 export default function Page() {
     const router = useRouter();
@@ -45,6 +45,35 @@ export default function Page() {
 
         fetchOffers();
     }, []);
+
+    const addBooking = async (offer: object) => {
+
+        const userKey = getUserKey();
+
+        const booking = {
+            "bookingOfferTitle" : offer.title,
+            "price" : offer.price,
+            "userKey" : userKey,
+            "numberOfGuests": offer.numberOfCustomers
+        };
+        try {
+            const response = await fetch('http://localhost:8080/api/booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(booking),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            };
+        } catch (error) {
+            console.error('Échec lors de l\'ajout de la réservation:', error);
+        };
+
+        //Faire le push vers le panier une fois créé
+    };
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -99,6 +128,7 @@ export default function Page() {
                                         Détails
                                     </button>
                                     {isLoggedIn && (<button
+                                        onClick={() => addBooking(offer)}
                                         className="flex-1 text-center py-2 bg-indigo-600 rounded text-sm text-white hover:bg-indigo-700"
                                     >
                                         Ajouter au panier

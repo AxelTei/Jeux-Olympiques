@@ -22,6 +22,7 @@ export const loginUser = async (username, password) => {
                 localStorage.setItem('userId', JSON.stringify(data.id))
                 localStorage.setItem('userData', JSON.stringify(data.username))
                 localStorage.setItem('userRole', JSON.stringify(data.roles))
+                localStorage.setItem('userKey', JSON.stringify(data.userKey))
             }
 
             return { success: true, token: data.token, user: data.user };
@@ -79,6 +80,17 @@ export const getUserData = () => {
 };
 
 /**
+ * Récupère la clef de l'utilisateur stockée dans le locastorage
+ * @returns {string|null} la clef utilisateur ou null si non disponible
+ */
+export const getUserKey = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('userKey');
+    }
+    return null;
+}
+
+/**
  * Déconnecte l'utilisateur en supprimant les données d'authentification
  * et en faisant un appel vers Spring Boot pour la déconnexion côté back-end
 */
@@ -99,6 +111,7 @@ export const logoutUser = async () => {
                 localStorage.removeItem('userData');
                 localStorage.removeItem('userId');
                 localStorage.removeItem('userRole');
+                localStorage.removeItem('userKey');
             } else {
                 return { success: false, message: data.message || 'Échec de déconnexion' };
             }
