@@ -72,7 +72,7 @@ export default function Page() {
             console.error('Échec lors de l\'ajout de la réservation:', error);
         };
 
-        //Faire le push vers le panier une fois créé
+        router.push("/Panier");
     };
 
     return (
