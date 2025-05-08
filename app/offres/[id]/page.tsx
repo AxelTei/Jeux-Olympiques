@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { use } from 'react';
 import { useRouter } from 'next/navigation';
-import { getAuthToken, getRole } from '@/app/services/authService';
+import { getAuthToken, getRole, getUserKey } from '@/app/services/authService';
 
 export default function Page({ params }: {params: Promise<{id: string}>}) {
     const router = useRouter();
@@ -52,6 +52,35 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
 
         fetchOfferDetail();
     }, [id]);
+
+    const addBooking = async (offer: object) => {
+    
+        const userKey = getUserKey();
+    
+        const booking = {
+            "bookingOfferTitle" : offer.title,
+            "price" : offer.price,
+            "userKey" : userKey,
+            "numberOfGuests": offer.numberOfCustomers
+        };
+        try {
+            const response = await fetch('http://localhost:8080/api/booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(booking),
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            };
+        } catch (error) {
+            console.error('Échec lors de l\'ajout de la réservation:', error);
+        };
+    
+        router.push("/Panier");
+    };
 
     async function deleteOffer(id: string): Promise<boolean> {
         try {
@@ -136,7 +165,10 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
                                     </div>
 
                                     {isLoggedIn && (<div className='space-y-3'>
-                                        <button className='w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition-colors'>
+                                        <button
+                                            className='w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition-colors'
+                                            onClick={() => addBooking(offer)}
+                                        >
                                             Ajouter au panier
                                         </button>
                                     </div>) || (<p className="flex-1 text-center text-sm text-gray-600">Vous devez créer un compte et vous connectez pour ajouter une offre à votre panier.</p>)}

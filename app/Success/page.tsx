@@ -37,7 +37,7 @@ const SuccessPage: React.FC = () => {
 
                 {paymentInfo ? (
                     <div className='payment-details'>
-                        <p>Montant: <span>{(paymentInfo.amount / 100).toFixed(2)} €</span></p>
+                        <p>Montant: <span>{paymentInfo.amount} €</span></p>
                         <p>Date: <span>{paymentInfo.date}</span></p>
                         <p>Référence: <span>REF-{Math.random().toString(36).substring(2, 10).toUpperCase()}</span></p>
                     </div>

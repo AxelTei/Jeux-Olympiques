@@ -63,20 +63,13 @@ export default function Page() {
         }
     };
 
-    const goToCheckout = () => {
-        router.push('/Checkout');
-    };
-
-    //Rajouter les bons validators sur le formulaire de la page checkout
-    //passer en parametre l'id du booking sélectionné pour le checkout, utilisé ensuite l'id dans un appel fetch lui meme dans un useEffect pour récupéré le montant correct du paiement
-    //appel fetch suppresion de la réservation dans la page checkout avant le router.push de la page success
-    // Voir si il est possible d'atteindre une erreur en soumettant le formulaire 
-    //créer une page PaymentError en expliquant comment y accéder dans la page checkout sans oublier de mentionner que la page checkout est une simulation.
     // back-end ticket (creation de ticket, getAllTicket et getTicketByScan) (paymentKey et QRcodeKey(merge userKey+paymentKey) permettant de retrouver les infos de l'utilisateur stockées dans le ticket plus la userKey et la paymentKey)
-    //// appel fetch création de ticket à rajouter pour page PaymentSuccess
+    //appel fetch suppresion de la réservation dans la page success dans un useEffect
+    //// appel fetch création de ticket à rajouter pour page PaymentSuccess dans un useEffect
     //créer une page mes tickets disponible seulement pour les personnes connectés (affiche seulement le titre du ticket et son QRcode car e-ticket, scan recevant des infos sous format json)
     // back-end sellsByOffer (création de sellsByOffer à chaque création de bookingOffer, update de sellsCounter +1 à chaque création de ticket avec le même offerTitle)
     // créer la page espace admin, y ajouter un lien pour la création d'offerBooking et remplace le lien offerBooking sur la navbar par espace admin
+    //avant de cloturer faire test avec des prix décimaux et correction si nécessaire.
 
     if (loading && !carts) {
         return (
@@ -160,7 +153,7 @@ export default function Page() {
                                 <div className="mt-2 flex justify-between items-center">
                                     <div className="text-lg font-medium text-gray-900">Prix: {cart.price}€</div>
                                     <button
-                                        onClick={goToCheckout}
+                                        onClick={() => router.push(`/Checkout/${cart.bookingId}`)}
                                         className="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
                                         Procéder au paiement
