@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 export default function Page() {
-  const [notification, setNotification] = useState(null);
+  const [notification, setNotification] = useState<string | null>(null);
   const searchParams = useSearchParams();
 
   useEffect(() => {
     const success = searchParams.get('success');
-    const message = searchParams.get('message');
+    const message: string | null = searchParams.get('message');
 
     if (success === 'true' && message) {
       setNotification(message);

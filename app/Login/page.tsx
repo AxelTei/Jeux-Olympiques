@@ -7,13 +7,13 @@ import Link from "next/link";
 import { loginUser } from '../services/authService';
 
 export default function Page() {
-    const [notification, setNotification] = useState(null);
+    const [notification, setNotification] = useState<string | null>(null);
     const searchParams = useSearchParams();
     // const [form, setForm] = useState({ username: '', password: '' });
     // const [error, setError] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState<string | undefined>('');
     const router = useRouter();
 
     useEffect(() => {
@@ -32,7 +32,7 @@ export default function Page() {
         }
     }, [searchParams]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
 

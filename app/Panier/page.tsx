@@ -64,17 +64,19 @@ export default function Page() {
     };
 
     const goToCheckout = () => {
-        router.push('/CheckoutSuccess'); //page paiement Stripe
-    // Si stripe est utilisé, faire le fetch création de ticket et récupération clef de paiement directement dans la page success
+        router.push('/Checkout');
     };
 
-    //     // appel fetch création de ticket
-    //      //récupération clef de paiement dans localStorage
-    //appel fetch suppresion de la réservation
-    // // Pour page PaymentSuccess
-    // // appel fetch getTicketByPaymentKey sur page success en passant le paymentkey du localStorage; stocker la data en variable puis la distribuer sur la page.
-    // // Ensuite supprimer la PaymentKey du localStorage si PaymentKey notNull après déconnexion utilisateur et par changement de page avec bouton voir tous mes tickets.
-    //créer une page mes tickets
+    //Rajouter les bons validators sur le formulaire de la page checkout
+    //passer en parametre l'id du booking sélectionné pour le checkout, utilisé ensuite l'id dans un appel fetch lui meme dans un useEffect pour récupéré le montant correct du paiement
+    //appel fetch suppresion de la réservation dans la page checkout avant le router.push de la page success
+    // Voir si il est possible d'atteindre une erreur en soumettant le formulaire 
+    //créer une page PaymentError en expliquant comment y accéder dans la page checkout sans oublier de mentionner que la page checkout est une simulation.
+    // back-end ticket (creation de ticket, getAllTicket et getTicketByScan) (paymentKey et QRcodeKey(merge userKey+paymentKey) permettant de retrouver les infos de l'utilisateur stockées dans le ticket plus la userKey et la paymentKey)
+    //// appel fetch création de ticket à rajouter pour page PaymentSuccess
+    //créer une page mes tickets disponible seulement pour les personnes connectés (affiche seulement le titre du ticket et son QRcode car e-ticket, scan recevant des infos sous format json)
+    // back-end sellsByOffer (création de sellsByOffer à chaque création de bookingOffer, update de sellsCounter +1 à chaque création de ticket avec le même offerTitle)
+    // créer la page espace admin, y ajouter un lien pour la création d'offerBooking et remplace le lien offerBooking sur la navbar par espace admin
 
     if (loading && !carts) {
         return (
