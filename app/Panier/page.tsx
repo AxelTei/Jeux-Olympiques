@@ -63,8 +63,8 @@ export default function Page() {
         }
     };
 
+    //appel fetch suppresion de la réservation dans la page checkout avant de push vers la page success
     // back-end ticket (creation de ticket, getAllTicket et getTicketByScan) (paymentKey et QRcodeKey(merge userKey+paymentKey) permettant de retrouver les infos de l'utilisateur stockées dans le ticket plus la userKey et la paymentKey)
-    //appel fetch suppresion de la réservation dans la page success dans un useEffect
     //// appel fetch création de ticket à rajouter pour page PaymentSuccess dans un useEffect
     //créer une page mes tickets disponible seulement pour les personnes connectés (affiche seulement le titre du ticket et son QRcode car e-ticket, scan recevant des infos sous format json)
     // back-end sellsByOffer (création de sellsByOffer à chaque création de bookingOffer, update de sellsCounter +1 à chaque création de ticket avec le même offerTitle)

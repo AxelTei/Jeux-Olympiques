@@ -13,6 +13,7 @@ interface BookingDetails {
 
 interface CheckoutFormProps {
     amount: number;
+    id: string;
 }
 
 interface MockCardInputProps {
@@ -168,7 +169,7 @@ const MockCardInput: React.FC<MockCardInputProps> = ({
     );
 };
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ amount }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ amount, id }) => {
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -334,6 +335,17 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ amount }) => {
                 }));
 
                 //fetch suppression booking
+                const response = await fetch(`http://localhost:8080/api/booking/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erreur: ${response.status}`)
+                }
+
                 // Redirection vers la page succès
                 router.push('/Success');
             } else {
@@ -371,7 +383,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ amount }) => {
                 disabled={loading}
                 className='pay-button'
             >
-                {loading ? 'Traitement...' : `Payer ${(amount / 100).toFixed(2)} €`}
+                {loading ? 'Traitement...' : `Payer ${amount} €`}
             </button>
 
             {errorMessage && <div className='error-message'>{errorMessage}</div>}
@@ -559,7 +571,7 @@ const CheckoutPage: React.FC = () => {
                 </div>
             </div>
 
-            <CheckoutForm amount={bookingDetails.price}/>
+            <CheckoutForm amount={bookingDetails.price} id={bookingDetails.bookingId}/>
 
             <style jsx>{`
                 .container {
