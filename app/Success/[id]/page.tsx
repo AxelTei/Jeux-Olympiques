@@ -137,7 +137,7 @@ const SuccessPage: React.FC = () => {
                 <h2>Impossible de charger les détails de votre paiement</h2>
                 <p>{error || "Réservation non trouvée"}</p>
                 <button
-                    onClick={() => router.back()}
+                    onClick={() => router.push("/Panier")}
                     className='back-button'
                 >
                     Retour
@@ -201,7 +201,7 @@ const SuccessPage: React.FC = () => {
                     <Link href="/">
                         <div className='primary-button'>Retour à l&apos;accueil</div>
                     </Link>
-                    <Link href='/Tickets'>
+                    <Link href='/MesTickets'>
                         <div className='secondary-button'>Votre Portefeuille de Tickets</div>
                     </Link>
                 </div>
