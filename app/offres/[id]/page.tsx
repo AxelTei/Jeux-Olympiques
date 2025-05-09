@@ -6,10 +6,17 @@ import { use } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAuthToken, getRole, getUserKey } from '@/app/services/authService';
 
+interface Offer {
+    bookingOfferId: string;
+    title: string;
+    price: number;
+    numberOfCustomers: number;
+}
+
 export default function Page({ params }: {params: Promise<{id: string}>}) {
     const router = useRouter();
     const { id } = use(params);
-    const [offer, setOffer] = useState(null);
+    const [offer, setOffer] = useState<Offer | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const token = getAuthToken();
@@ -44,7 +51,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
                 setOffer(data);
             } catch (err) {
                 console.error('Erreur:', err);
-                setError(err.message);
+                setError("Une erreur est survenue");
             } finally {
                 setLoading(false);
             }
@@ -53,7 +60,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
         fetchOfferDetail();
     }, [id]);
 
-    const addBooking = async (offer: object) => {
+    const addBooking = async (offer: Offer) => {
     
         const userKey = getUserKey();
     
@@ -107,7 +114,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
     return (
         <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
             <Head>
-                <title>{loading ? 'Chargement...' : error ? 'Erreur' : `${offer.title}`}</title>
+                <title>{loading ? 'Chargement...' : error ? 'Erreur' : `${offer?.title}`}</title>
             </Head>
 
             <div className='mb-6'>

@@ -63,7 +63,6 @@ export default function Page() {
         }
     };
 
-    //// appel fetch création de ticket à rajouter pour page PaymentSuccess dans un useEffect
     //créer une page mes tickets disponible seulement pour les personnes connectés (affiche seulement le titre du ticket et son QRcode car e-ticket, scan recevant des infos sous format json)
     // back-end sellsByOffer (création de sellsByOffer à chaque création de bookingOffer, update de sellsCounter +1 à chaque création de ticket avec le même offerTitle)
     // créer la page espace admin, y ajouter un lien pour la création d'offerBooking et remplace le lien offerBooking sur la navbar par espace admin
