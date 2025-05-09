@@ -5,9 +5,16 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getRole, getAuthToken, getUserKey } from "../services/authService";
 
+interface Offer {
+    bookingOfferId: string;
+    title: string;
+    price: number;
+    numberOfCustomers: number;
+}
+
 export default function Page() {
     const router = useRouter();
-    const [offers, setOffers] = useState([]);
+    const [offers, setOffers] = useState<Offer[] | never[]>([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,7 +53,7 @@ export default function Page() {
         fetchOffers();
     }, []);
 
-    const addBooking = async (offer: object) => {
+    const addBooking = async (offer: Offer) => {
 
         const userKey = getUserKey();
 

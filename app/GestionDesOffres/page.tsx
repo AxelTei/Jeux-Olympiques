@@ -17,7 +17,7 @@ export default function Page() {
     const token = getAuthToken();
     console.log(token);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
@@ -25,7 +25,7 @@ export default function Page() {
         }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
         setError('');
@@ -56,7 +56,7 @@ export default function Page() {
             router.push('/NosOffres');
         } catch (err) {
             console.error('Erreur lors de la soumission:', err);
-            setError(err.message || 'Une erreur est survenue, veuillez réessayer');
+            setError('Une erreur est survenue, veuillez réessayer');
         } finally {
             setIsSubmitting(false);
         }
