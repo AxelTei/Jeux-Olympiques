@@ -1,9 +1,17 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 // import { PaymentIntent } from '../services/api';
+
+interface BookingDetails {
+    bookingId: string;
+    bookingOfferTitle: string;
+    price: number;
+    userKey: string;
+    numberOfGuests: number;
+}
 
 const SuccessPage: React.FC = () => {
     const router = useRouter();
@@ -11,6 +19,13 @@ const SuccessPage: React.FC = () => {
         amount: number;
         date: string;
     } | null>(null);
+    const params = useParams(); // Récupère les paramètres de l'URL
+    const bookingId = params.id as string; // Récupération de l'id depuis l'URL
+    // Récupération de la réservation
+    const [bookingDetails, setBookingDetails] = useState<BookingDetails| null>(null);
+    // État de chargement
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const storedPaymentInfo = localStorage.getItem('paymentInfo');
@@ -21,7 +36,130 @@ const SuccessPage: React.FC = () => {
                 router.push('/');
             }, 5000);
         }
-    }, [router]);
+
+        const fetchOfferDetail = async () => {
+            if (!bookingId) {
+                setError("Aucune réservation spécifiée");
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/booking/${bookingId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erreur lors de la récupération de la réservation (${response.status})`);
+                }
+
+                const data = await response.json();
+                // Mettre à jour l'état avec les détails de l'offre
+                setBookingDetails({
+                    bookingId: data.bookingId,
+                    bookingOfferTitle: data.bookingOfferTitle,
+                    price: data.price,
+                    userKey: data.userKey,
+                    numberOfGuests: data.numberOfGuests
+                });
+            } catch (err) {
+                console.error('Erreur lors du chargement des détails de la réservation:', err);
+                setError(err instanceof Error ? err.message : "Erreur inconnue lors du chargement de la réservation");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOfferDetail();
+
+        //fetch suppression booking
+        const deleteOffer = async () => {
+            const response = await fetch(`http://localhost:8080/api/booking/${bookingId}`, {
+                method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erreur: ${response.status}`)
+                }
+        }
+        deleteOffer();
+    }, [router, bookingId]);
+
+    if (loading) {
+        return (
+            <div className='container loading-container'>
+                <div className='loading-spinner'></div>
+                <p>Chargement des détails de votre paiement...</p>
+
+                <style jsx>{`
+                    .loading-container {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        height: 60vh;
+                    }
+                    .loading-spinner {
+                        border: 4px solid rgba(0, 0, 0, 0.1);
+                        border-radius: 50%;
+                        border-top: 4px solid #5469d4
+                        width: 40px;
+                        height: 40px;
+                        margin-bottom: 20px;
+                        animation: spin 1s linear infinite;
+                    }
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                `}</style>
+            </div>
+        );
+    }
+
+    if (error || !bookingDetails) {
+        return (
+            <div className='container error-container'>
+                <div className='error-icon'>⚠️</div>
+                <h2>Impossible de charger les détails de votre paiement</h2>
+                <p>{error || "Réservation non trouvée"}</p>
+                <button
+                    onClick={() => router.back()}
+                    className='back-button'
+                >
+                    Retour
+                </button>
+
+                <style jsx>{`
+                    .error-container {
+                        text-align: center;
+                        padding: 40px 20px;
+                    }
+                    .error-icon {
+                        font-size: 48px;
+                        margin-bottom: 20px;
+                    }
+                    .back-button {
+                        background-color: #5469d4;
+                        color: white;
+                        border: none;
+                        padding: 10px 16px;
+                        border-radius: 4px;
+                        font-size: 16px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        margin-top: 20px;
+                    }
+                `}</style>
+            </div>
+        );
+    }
 
     return (
         <div className='success-container'>

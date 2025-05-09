@@ -334,20 +334,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ amount, id }) => {
                     date: new Date().toLocaleDateString()
                 }));
 
-                //fetch suppression booking
-                const response = await fetch(`http://localhost:8080/api/booking/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Erreur: ${response.status}`)
-                }
-
                 // Redirection vers la page succès
-                router.push('/Success');
+                router.push(`/Success/${id}`);
             } else {
                 setErrorMessage('Une erreur est survenue lors de la communication avec le serveur');
             }
