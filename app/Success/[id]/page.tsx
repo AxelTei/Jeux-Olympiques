@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-// import { PaymentIntent } from '../services/api';
+import { getAlias } from '@/app/services/authService';
 
 interface BookingDetails {
     bookingId: string;
@@ -15,10 +15,6 @@ interface BookingDetails {
 
 const SuccessPage: React.FC = () => {
     const router = useRouter();
-    const [paymentInfo, setPaymentInfo] = useState<{
-        amount: number;
-        date: string;
-    } | null>(null);
     const params = useParams(); // Récupère les paramètres de l'URL
     const bookingId = params.id as string; // Récupération de l'id depuis l'URL
     // Récupération de la réservation
@@ -28,22 +24,8 @@ const SuccessPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const storedPaymentInfo = localStorage.getItem('paymentInfo');
-        if (storedPaymentInfo) {
-            setPaymentInfo(JSON.parse(storedPaymentInfo));
-        } else {
-            setTimeout(() => {
-                router.push('/');
-            }, 5000);
-        }
-
+        if (!bookingId) return;
         const fetchOfferDetail = async () => {
-            if (!bookingId) {
-                setError("Aucune réservation spécifiée");
-                setLoading(false);
-                return;
-            }
-
             try {
                 const response = await fetch(`http://localhost:8080/api/booking/${bookingId}`, {
                     method: 'GET',
@@ -74,22 +56,47 @@ const SuccessPage: React.FC = () => {
         };
 
         fetchOfferDetail();
+    }, [bookingId]);
 
-        //fetch suppression booking
-        const deleteOffer = async () => {
-            const response = await fetch(`http://localhost:8080/api/booking/${bookingId}`, {
-                method: 'DELETE',
+    // Flag statique pour garantir une seule création de ticket
+    const hasCreatedTicket = React.useRef(false);
+
+    // Création du ticket une seule fois quand bookingDetails est disponible
+    useEffect(() => {
+        // Ne s'exécute que si bookingDetails est disponible et que le ticket n'a pas encore été créé
+        if (!bookingDetails || hasCreatedTicket.current) return;
+        
+        // Marquer que le ticket a été créé AVANT de lancer la création
+        hasCreatedTicket.current = true;
+        
+        const createTicket = async () => {
+            try {
+                const alias = getAlias();
+                
+                const response = await fetch('http://localhost:8080/api/ticket', {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                    }
+                    },
+                    body: JSON.stringify({
+                        username: alias,
+                        offerTitle: bookingDetails.bookingOfferTitle,
+                        ticketPrice: bookingDetails.price,
+                        numberOfGuests: bookingDetails.numberOfGuests,
+                        userKey: bookingDetails.userKey
+                    })
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Erreur: ${response.status}`)
+                    throw new Error(`Erreur lors de la création du eticket (${response.status})`);
                 }
-        }
-        deleteOffer();
-    }, [router, bookingId]);
+            } catch (err) {
+                console.error('Erreur lors de la création du ticket:', err);
+            }
+        };
+
+        createTicket();
+    }, [bookingDetails]);
 
     if (loading) {
         return (
@@ -108,7 +115,7 @@ const SuccessPage: React.FC = () => {
                     .loading-spinner {
                         border: 4px solid rgba(0, 0, 0, 0.1);
                         border-radius: 50%;
-                        border-top: 4px solid #5469d4
+                        border-top: 4px solid #5469d4;
                         width: 40px;
                         height: 40px;
                         margin-bottom: 20px;
@@ -161,6 +168,9 @@ const SuccessPage: React.FC = () => {
         );
     }
 
+    const date = new Date();
+    const dateFormat = `0${date.getDate()}/0${date.getMonth() + 1}/${date.getFullYear()}`;
+
     return (
         <div className='success-container'>
             <div className='success-card'>
@@ -173,10 +183,10 @@ const SuccessPage: React.FC = () => {
 
                 <h1>Paiement réussi!</h1>
 
-                {paymentInfo ? (
+                {bookingDetails ? (
                     <div className='payment-details'>
-                        <p>Montant: <span>{paymentInfo.amount} €</span></p>
-                        <p>Date: <span>{paymentInfo.date}</span></p>
+                        <p>Montant: <span>{bookingDetails.price} €</span></p>
+                        <p>Date: <span>{dateFormat}</span></p>
                         <p>Référence: <span>REF-{Math.random().toString(36).substring(2, 10).toUpperCase()}</span></p>
                     </div>
                 ) : (

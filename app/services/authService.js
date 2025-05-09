@@ -23,6 +23,7 @@ export const loginUser = async (username, password) => {
                 localStorage.setItem('userData', JSON.stringify(data.username))
                 localStorage.setItem('userRole', JSON.stringify(data.roles))
                 localStorage.setItem('userKey', JSON.stringify(data.userKey))
+                localStorage.setItem('userAlias', JSON.stringify(data.alias))
             }
 
             return { success: true, token: data.token, user: data.user };
@@ -43,6 +44,17 @@ export const getAuthToken = () => {
     //Vérification si window existe (important pour Next.js qui fait du SSR)
     if (typeof window !== 'undefined') {
         return localStorage.getItem('authToken');
+    }
+    return null;
+};
+
+/**
+ * Récupère le surnom de l'utilisateur connecté
+ * @returns {string|null} Le surnom de l'utilisateur ou null s'il n'existe pas
+ */
+export const getAlias = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('userAlias');
     }
     return null;
 };
@@ -112,6 +124,8 @@ export const logoutUser = async () => {
                 localStorage.removeItem('userId');
                 localStorage.removeItem('userRole');
                 localStorage.removeItem('userKey');
+                localStorage.removeItem('userAlias');
+                localStorage.removeItem('paymentInfo');
             } else {
                 return { success: false, message: data.message || 'Échec de déconnexion' };
             }
