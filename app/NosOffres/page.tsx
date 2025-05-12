@@ -97,7 +97,6 @@ export default function Page() {
                 >
                     Ajouter une offre
                 </Link>)}
-                {/* Lien à protéger pour admin seulement */}
             </div>
 
             {loading ? (

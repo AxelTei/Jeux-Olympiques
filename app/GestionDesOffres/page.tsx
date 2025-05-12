@@ -15,7 +15,6 @@ export default function Page() {
         numberOfCustomers: '',
     });
     const token = getAuthToken();
-    console.log(token);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
