@@ -6,11 +6,11 @@ export default function HomeArticleSection() {
     return (
         <div className="grid sm:grid-cols-3 sm:h-100">
             <div className="grid justify-items-end content-end border border-solid border-gray-400">
-                <h1 className={`${poppins.className} mb-6 mr-12 text-xl font-bold ml-6 mt-4 sm:mt-0`}>Olympic Games Paris 2024</h1>
+                <h1 className={`${poppins.className} mb-6 mr-12 text-xl font-bold ml-6 mt-4 sm:mt-0`}>Jeux Olympiques Paris 2024</h1>
                 <ul className="mb-8 mr-12">
                     <li className="hover:text-[#d7c378]">Aperçu général</li>
-                    <li className="hover:text-[#d7c378]">Replays & meilleurs moments</li>
-                    <li className="hover:text-[#d7c378]">Résultats</li>
+                    <li className="hover:text-[#d7c378]">Les épreuves</li>
+                    <li className="hover:text-[#d7c378]">Sponsors</li>
                     <li className="hover:text-[#d7c378]">Athlètes</li>
                     <li className="hover:text-[#d7c378]">Actualités</li>
                     <li className="hover:text-[#d7c378]">Marque</li>

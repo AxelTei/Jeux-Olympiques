@@ -2,6 +2,7 @@
 
 import HomeArticleSection from "./ui/HomeArticleSection";
 import HomeImageSection from "./ui/HomeImageSection";
+import ParisOlympicsSection from "./ui/ParisOlympicsSection";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -62,6 +63,7 @@ export default function Page() {
       )}
       <HomeArticleSection />
       <HomeImageSection />
+      <ParisOlympicsSection />
     </div>
   )
 }

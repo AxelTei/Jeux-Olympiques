@@ -11,9 +11,9 @@ export default function Footer() {
                 <div className="m-8 w-50">
                     <h2 className="text-white pb-4">Jeux Olympiques</h2>
                     <ul>
-                        <li className="text-gray-400 hover:text-white">Milan Cortina 2026</li>
-                        <li className="text-gray-400 hover:text-white">Résultats & Médailles</li>
-                        <li className="text-gray-400 hover:text-white">Replays & Meilleurs moments</li>
+                        <li className="text-gray-400 hover:text-white">Paris Parc JO 2024</li>
+                        <li className="text-gray-400 hover:text-white">Épreuves</li>
+                        <li className="text-gray-400 hover:text-white">Les Préparations</li>
                         <li className="text-gray-400 hover:text-white">Tous les Jeux Olympiques</li>
                     </ul>
                 </div>
