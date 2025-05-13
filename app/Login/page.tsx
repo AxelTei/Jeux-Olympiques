@@ -9,8 +9,6 @@ import { loginUser } from '../services/authService';
 export default function Page() {
     const [notification, setNotification] = useState<string | null>(null);
     const searchParams = useSearchParams();
-    // const [form, setForm] = useState({ username: '', password: '' });
-    // const [error, setError] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | undefined>('');
@@ -64,6 +62,8 @@ export default function Page() {
                         créer un nouveau compte
                     </Link>
                 </p>
+                <p className="mt-2 text-center text-sm text-gray-600">Vous pouvez quitter le site sans vous déconnecter, le site vous reconnaitra à votre retour.</p>
+                <p className="mt-2 text-center text-sm text-gray-600">Cependant, si vous revenez une journée après votre déconnexion, veuillez-vous déconnecter/reconnecter car votre session sera expirée.</p>
             </div>
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
