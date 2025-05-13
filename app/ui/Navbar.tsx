@@ -65,7 +65,7 @@ export default function Navbar() {
                 <div className={getMenuClasses()}>
                     <Link href="/" className="mx-2 hover:text-black flex items-center">Accueil</Link>
                     <Link href="/NosOffres" className="mx-2 hover:text-black flex items-center">Nos Offres</Link>
-                    <Link href="#" className="mx-2 hover:text-black flex items-center">Contact</Link>
+                    <Link href="/Contact" className="mx-2 hover:text-black flex items-center">Contact</Link>
                     {isLoggedIn && (<Link href="/Panier" className="mx-2 hover:text-black flex items-center">Panier</Link>)}
                     {isLoggedIn && (<Link href="/MesTickets" className="mx-2 hover:text-black flex items-center">Mes Tickets</Link>)}
                     {isAdmin && (<Link href="/Admin" className="mx-2 hover:text-black flex items-center">Espace Admin</Link>)}
