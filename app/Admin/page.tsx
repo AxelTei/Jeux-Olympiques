@@ -51,7 +51,6 @@ export default function SellsByOfferPage() {
 
   // Calculs pour les statistiques
   const totalSales = sellsData.reduce((acc, item) => acc + item.sells, 0);
-  const totalRevenue = sellsData.reduce((acc, item) => acc + item.offerPrice, 0);
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -77,12 +76,6 @@ export default function SellsByOfferPage() {
             <div className="px-4 py-5 sm:p-6">
               <dt className="text-sm font-medium text-gray-500 truncate">Total des ventes</dt>
               <dd className="mt-1 text-3xl font-semibold text-indigo-600">{totalSales}</dd>
-            </div>
-          </div>
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="px-4 py-5 sm:p-6">
-              <dt className="text-sm font-medium text-gray-500 truncate">Chiffre d&apos;affaires</dt>
-              <dd className="mt-1 text-3xl font-semibold text-indigo-600">{totalRevenue} €</dd>
             </div>
           </div>
           <div className="bg-white overflow-hidden shadow rounded-lg">
