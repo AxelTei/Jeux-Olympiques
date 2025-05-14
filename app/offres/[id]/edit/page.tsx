@@ -26,7 +26,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
             try {
                 setIsLoading(true);
 
-                const response = await fetch(`http://localhost:8080/api/bookingOffer/${id}`, {
+                const response = await fetch(`/api/offers/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
         try {
             setIsSaving(true);
 
-            const response = await fetch(`http://localhost:8080/api/bookingOffer/${id}`, {
+            const response = await fetch(`/api/updateOffer/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
