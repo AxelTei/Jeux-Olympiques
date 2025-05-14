@@ -128,8 +128,7 @@ export default function Page() {
                 confirmPassword: form.confirmPassword
             };
 
-            // Utiliser l'URL d'origine mais avec les données sanitisées
-            const res = await fetch('http://localhost:8080/auth/signup', {
+            const res = await fetch('/api/auth', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

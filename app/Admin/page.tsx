@@ -23,13 +23,10 @@ export default function SellsByOfferPage() {
     const fetchSellsData = async () => {
       try {
         setIsLoading(true);
-        // Remplacez l'URL par l'endpoint de votre API Spring Boot
-        const response = await fetch('http://localhost:8080/api/sellsByOffer', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
+        const response = await fetch('/api/sellsByOffer', {
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
         });
 
         if (!response.ok) {
