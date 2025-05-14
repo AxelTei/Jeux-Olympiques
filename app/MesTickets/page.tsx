@@ -31,7 +31,7 @@ const Page: React.FC = () => {
         const fetchTickets = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('http://localhost:8080/api/ticket', {
+                const response = await fetch('/api/ticket', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

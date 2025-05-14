@@ -17,7 +17,7 @@ export default function Page() {
         const getCart = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('http://localhost:8080/api/booking', {
+                const response = await fetch('/api/booking', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ export default function Page() {
     const handleRemoveItem = async (cartId: number): Promise<void> => {
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:8080/api/booking/${cartId}`, {
+            const response = await fetch(`/api/booking/${cartId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,11 +62,6 @@ export default function Page() {
             setLoading(false);
         }
     };
-
-    //créer une page mes tickets disponible seulement pour les personnes connectés (affiche seulement le titre du ticket et son QRcode car e-ticket, scan recevant des infos sous format json)
-    // back-end sellsByOffer (création de sellsByOffer à chaque création de bookingOffer, update de sellsCounter +1 à chaque création de ticket avec le même offerTitle)
-    // créer la page espace admin, y ajouter un lien pour la création d'offerBooking et remplace le lien offerBooking sur la navbar par espace admin
-    //avant de cloturer faire test avec des prix décimaux et correction si nécessaire.
 
     if (loading && !carts) {
         return (

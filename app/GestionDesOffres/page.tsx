@@ -36,7 +36,7 @@ export default function Page() {
                 numberOfCustomers: parseInt(formData.numberOfCustomers, 10)
             };
 
-            const response = await fetch('http://localhost:8080/api/bookingOffer', {
+            const response = await fetch('/api/bookingOffer', {
                 method: 'POST',
                 body: JSON.stringify(offerData),
                 headers: {
@@ -128,7 +128,7 @@ export default function Page() {
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                     <div className='flex justify-end pt-5'>
-                        <p className='text-gray-500'>Vous pouvez supprimer ou modifier l&apos;offre directement sur la page de détails de l&apos;offre.</p>
+                        <p className='text-gray-500'>Vous pouvez supprimer ou modifier l&apos;offre directement sur la page de détails de l&apos;offre. Chaque Offre doivent avoir un titre unique.</p>
                         <button
                             type="submit"
                             disabled={isSubmitting}

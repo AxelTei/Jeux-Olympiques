@@ -29,7 +29,7 @@ export default function Page() {
         }
         const fetchOffers = async () => {
             try {
-                const response = await fetch("http://localhost:8080/api/bookingOffer", {
+                const response = await fetch("/api/offers", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export default function Page() {
             "numberOfGuests": offer.numberOfCustomers
         };
         try {
-            const response = await fetch('http://localhost:8080/api/booking', {
+            const response = await fetch('/api/addBooking', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

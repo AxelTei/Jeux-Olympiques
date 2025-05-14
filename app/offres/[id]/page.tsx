@@ -33,7 +33,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
         }
         const fetchOfferDetail = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/bookingOffer/${id}`, {
+                const response = await fetch(`/api/offers/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
             "numberOfGuests": offer.numberOfCustomers
         };
         try {
-            const response = await fetch('http://localhost:8080/api/booking', {
+            const response = await fetch('/api/addBooking', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export default function Page({ params }: {params: Promise<{id: string}>}) {
 
     async function deleteOffer(id: string): Promise<boolean> {
         try {
-            const response = await fetch(`http://localhost:8080/api/bookingOffer/${id}`, {
+            const response = await fetch(`/api/offers/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
