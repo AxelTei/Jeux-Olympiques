@@ -132,7 +132,7 @@ export default function SellsByOfferPage() {
                         Ventes
                       </th>
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Revenus
+                        Prix de l&apos;Offre
                       </th>
                     </tr>
                   </thead>

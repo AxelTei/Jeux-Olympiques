@@ -27,7 +27,7 @@ const SuccessPage: React.FC = () => {
         if (!bookingId) return;
         const fetchOfferDetail = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/booking/${bookingId}`, {
+                const response = await fetch(`/api/checkout/${bookingId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const SuccessPage: React.FC = () => {
             try {
                 const alias = getAlias();
                 
-                const response = await fetch('http://localhost:8080/api/ticket', {
+                const response = await fetch('/api/success', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

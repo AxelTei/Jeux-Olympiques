@@ -287,7 +287,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ amount, id }) => {
             }
 
             // Créer le PaymentIntent simulé côté serveur
-            const response = await fetch('http://localhost:8080/api/payment/create-payment-intent', {
+            const response = await fetch('/api/payment/create-payment-intent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -314,7 +314,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ amount, id }) => {
             const paymentIntentId = data.clientSecret.split('_secret_')[0];
 
             // Confirmer le paiement avec notre mock backend
-            const confirmResponse = await fetch('http://localhost:8080/api/payment/confirm-payment', {
+            const confirmResponse = await fetch('/api/payment/confirm-payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -442,7 +442,7 @@ const CheckoutPage: React.FC = () => {
             }
 
             try {
-                const response = await fetch(`http://localhost:8080/api/booking/${bookingId}`, {
+                const response = await fetch(`/api/checkout/${bookingId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
