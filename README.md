@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/React-19.0.0-blue" alt="React"/>
   <img src="https://img.shields.io/badge/TypeScript-5-3178C6" alt="TypeScript"/>
   <img src="https://img.shields.io/badge/Tailwind-4-06B6D4" alt="Tailwind CSS"/>
-  <img src="https://img.shields.io/badge/Status-En%20développement-yellow" alt="Status"/>
+  <img src="https://img.shields.io/badge/Status-Développement%20Terminé-green" alt="Status"/>
 </div>
 
 ## 📋 À propos du projet
