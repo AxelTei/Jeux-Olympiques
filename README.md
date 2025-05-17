@@ -79,7 +79,7 @@ STRIPE_SECRET_KEY=votre_clé_secrète_stripe
 
 ### Lancer le serveur de développement
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 L'application sera accessible à l'adresse : [http://localhost:3000](http://localhost:3000)
