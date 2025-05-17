@@ -10,7 +10,7 @@
 
 ## 📋 À propos du projet
 
-Cette application front-end basée sur Next.js et TypeScript permet aux utilisateurs de consulter les événements, réserver des billets et gérer leur participation aux Jeux Olympiques de Paris 2024. L'interface utilisateur moderne et réactive offre une expérience utilisateur optimale sur tous les appareils.
+Cette application front-end basée sur Next.js et TypeScript permet aux utilisateurs de consulter les événements, réserver des billets et gérer leur participation aux Jeux Olympiques de Paris 2024. (Projet Fictif - Étudiant) L'interface utilisateur moderne et réactive offre une expérience utilisateur optimale sur tous les appareils.
 
 ## 🛠️ Technologies utilisées
 
