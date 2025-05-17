@@ -70,7 +70,7 @@ Créez un fichier `.env.local` à la racine du projet avec les variables suivant
 
 ```env
 # API
-NEXT_PUBLIC_API_URL=http://localhost:8080/api
+NEXT_PUBLIC_API_URL=votre_url_api_backend
 
 # Stripe
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=votre_clé_publique_stripe
@@ -189,14 +189,9 @@ docker run -d -p 3000:3000 --name jo-frontend jo-frontend:latest
   Axel Teisseire
 </div>
 
-## 📄 Licence
-
-Ce projet est sous licence MIT. Voir le fichier `LICENSE.md` pour plus de détails.
-
 ---
 
 <div align="center">
-  <sub>Paris 2024 © Tous droits réservés</sub>
   <br>
   <img src="https://img.shields.io/badge/Made%20with-Next.js-black" alt="Made with Next.js"/>
 </div>
