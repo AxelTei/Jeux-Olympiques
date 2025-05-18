@@ -1,20 +1,28 @@
+// app/api/booking/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+interface Context {
+  params: {
+    id: string;
+  }
+}
+
+/**
+ * Gestionnaire de la requête DELETE pour supprimer une réservation
+ */
+export async function DELETE(request: NextRequest, context: Context) {
   try {
-    const id = params.id;
-    
+    const id = context.params.id;
+   
     // Appeler l'API Spring Boot
-    const response = await fetch(`${process.env.API_BASE_URL}/api/booking/${id}`, {
+    const apiBaseUrl = process.env.API_BASE_URL;
+    const response = await fetch(`${apiBaseUrl}/api/booking/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       }
     });
-
+    
     // Si la réponse n'est pas OK
     if (!response.ok) {
       return NextResponse.json(
@@ -22,10 +30,10 @@ export async function DELETE(
         { status: response.status }
       );
     }
-
+    
     // Retourner un succès
     return NextResponse.json({ success: true });
-    
+   
   } catch (error) {
     console.error('Erreur proxy API deleteBooking:', error);
     return NextResponse.json(
