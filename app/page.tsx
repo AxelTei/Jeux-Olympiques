@@ -1,32 +1,28 @@
 'use client';
-
+import React, { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import HomeArticleSection from "./ui/HomeArticleSection";
 import HomeImageSection from "./ui/HomeImageSection";
 import ParisOlympicsSection from "./ui/ParisOlympicsSection";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
-export default function Page() {
+// Composant qui utilise useSearchParams
+function HomeContent() {
   const [notification, setNotification] = useState<string | null>(null);
   const searchParams = useSearchParams();
 
   useEffect(() => {
     const success = searchParams.get('success');
     const message: string | null = searchParams.get('message');
-
     if (success === 'true' && message) {
       setNotification(message);
-
       //Nettoyer l'URL après quelques secondes
       const timer = setTimeout(() => {
         window.history.replaceState({}, '', '/');
       }, 5000);
-
       //Masquer la notification après 5 secondes
       const hideTimer = setTimeout(() => {
         setNotification(null)
       }, 5000);
-
       return () => {
         clearTimeout(timer);
         clearTimeout(hideTimer);
@@ -37,7 +33,7 @@ export default function Page() {
   return (
     <div>
       {/* Notification de succès */}
-      {notification && ( 
+      {notification && (
         <div className="fixed top-4 right-4 z-50 max-w-sm w-full bg-green-100 border-l-4 border-green-500 p-4 shadow-md rounded-md animate-fade-in-down">
           <div className="flex">
             <div className="flex-shrink-0">
@@ -65,5 +61,18 @@ export default function Page() {
       <HomeImageSection />
       <ParisOlympicsSection />
     </div>
-  )
+  );
+}
+
+// Composant principal avec Suspense
+export default function Page() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
+  );
 }
