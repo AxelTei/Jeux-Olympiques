@@ -1,17 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-interface RouteContext {
-  params : {
-    id : string;
-  }
-}
-
 export async function DELETE(
   request: NextRequest,
-  context: RouteContext
+  { params }: { params: { id: string } }
 ) {
   try {
-    const id = context.params.id;
+    const id = params.id;
     
     // Appeler l'API Spring Boot
     const response = await fetch(`${process.env.API_BASE_URL}/api/booking/${id}`, {
