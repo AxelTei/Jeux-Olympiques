@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = context.params;
     
     // Appeler l'API Spring Boot
     const response = await fetch(`${process.env.API_BASE_URL}/api/booking/${id}`, {
