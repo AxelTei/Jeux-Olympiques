@@ -39,7 +39,7 @@ const VerifyTicket: React.FC = () => {
         hour: '2-digit',
         minute: '2-digit'
       }).format(date);
-    } catch (e) {
+    } catch {
       return dateString;
     }
   };
@@ -81,10 +81,10 @@ const VerifyTicket: React.FC = () => {
         setTicket(ticketWithValidity);
         setVerificationStatus('success');
         setError(null);
-      } catch (err: any) {
-        console.error('Erreur lors de la vérification du ticket:', err);
+      } catch (error) {
+        console.error('Erreur lors de la vérification du ticket:', error);
         setVerificationStatus('error');
-        setError(err.message || 'Impossible de vérifier le ticket');
+        setError(error instanceof Error ? error.message : 'Impossible de vérifier le ticket');
       } finally {
         setLoading(false);
       }

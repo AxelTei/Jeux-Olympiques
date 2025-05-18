@@ -30,7 +30,7 @@ export default function Page() {
         handleSubmit, 
         formState: { errors }, 
         reset,
-        watch
+        //watch
     } = useForm<LoginFormInputs>({
         defaultValues: {
             username: '',
@@ -39,8 +39,8 @@ export default function Page() {
     });
 
     // Surveiller les valeurs entrées pour le sanitizing
-    const username = watch('username');
-    const password = watch('password');
+    //const username = watch('username');
+    //const password = watch('password');
 
     useEffect(() => {
         const success = searchParams.get('success');
@@ -72,7 +72,7 @@ export default function Page() {
                 if (lockTimer) clearTimeout(lockTimer);
             };
         }
-    }, [loginAttempts, isLocked]);
+    }, [loginAttempts, isLocked, lockTimer]);
 
     // Fonction pour valider et sanitizer l'email
     const validateEmail = (email: string): boolean => {
