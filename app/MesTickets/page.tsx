@@ -155,7 +155,7 @@ const Page: React.FC = () => {
                                 <div className="mt-4 flex justify-center">
                                     <div>
                                         <QRCode
-                                            value={`https://jo-api-9bdf561a2bea.herokuapp.com/api/verify-ticket/${ticket.qrCodeKey}` || window.location.origin}
+                                            value={`https://jeux-olympiques-79sb.vercel.app/verify-ticket/${ticket.qrCodeKey}` || window.location.origin}
                                             size={150}
                                             level="H"
                                         />
