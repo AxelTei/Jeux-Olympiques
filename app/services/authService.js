@@ -6,7 +6,7 @@
  */
 export const loginUser = async (username, password) => {
     try {
-        const response = await fetch('http://localhost:8080/auth/signin', {
+        const response = await fetch('https://jo-api-9bdf561a2bea.herokuapp.com/auth/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ export const getUserKey = () => {
 export const logoutUser = async () => {
     if (typeof window !== 'undefined') {
         try {
-            const response = await fetch('http://localhost:8080/auth/signout', {
+            const response = await fetch('https://jo-api-9bdf561a2bea.herokuapp.com/auth/signout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
