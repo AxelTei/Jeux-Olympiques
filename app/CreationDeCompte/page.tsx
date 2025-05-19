@@ -163,7 +163,7 @@ export default function Page() {
 
         try {
             // Utiliser l'URL d'origine
-            const res = await fetch('http://localhost:8080/auth/signupAdmin', {
+            const res = await fetch('https://jo-api-9bdf561a2bea.herokuapp.com/auth/signupAdmin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
