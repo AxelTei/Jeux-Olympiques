@@ -30,7 +30,7 @@ Cette application front-end basée sur Next.js et TypeScript permet aux utilisat
     </td>
   </tr>
   <tr>
-    <td><strong>Paiement</strong></td>
+    <td><strong>Paiement (Mock)</strong></td>
     <td>
       <img src="https://img.shields.io/badge/Stripe-7.3.0-6772E5" alt="Stripe"/>
     </td>
@@ -49,7 +49,6 @@ Cette application front-end basée sur Next.js et TypeScript permet aux utilisat
 
 - Node.js 20.x ou supérieur
 - npm 10.x ou supérieur
-- Compte Stripe (pour les fonctionnalités de paiement)
 - Connexion à l'API de billetterie des JO 
 
 ## 🚀 Installation et démarrage
@@ -73,8 +72,7 @@ Créez un fichier `.env.local` à la racine du projet avec les variables suivant
 NEXT_PUBLIC_API_URL=votre_url_api_backend
 
 # Stripe
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=votre_clé_publique_stripe
-STRIPE_SECRET_KEY=votre_clé_secrète_stripe
+Pas besoin c'est un mock
 ```
 
 ### Lancer le serveur de développement
@@ -83,34 +81,6 @@ pnpm run dev
 ```
 
 L'application sera accessible à l'adresse : [http://localhost:3000](http://localhost:3000)
-
-## 📁 Structure du projet
-
-```
-jeux-olympiques/
-├── app/                      # Répertoire Next.js App Router
-│   ├── api/                  # Endpoints API Routes
-│   ├── (auth)/               # Routes d'authentification 
-│   │   ├── login/            # Page de connexion
-│   │   └── register/         # Page d'inscription
-│   ├── billets/              # Pages de gestion des billets
-│   ├── evenements/           # Pages des événements sportifs
-│   ├── profil/               # Page de profil utilisateur
-│   ├── paiement/             # Pages de paiement Stripe
-│   └── layout.tsx            # Layout principal
-├── components/               # Composants React réutilisables
-│   ├── common/               # Composants communs (boutons, cartes, etc.)
-│   ├── layout/               # Composants de mise en page (header, footer)
-│   └── forms/                # Composants de formulaires 
-├── lib/                      # Fonctions utilitaires et configuration
-│   ├── api.ts                # Client API
-│   └── stripe.ts             # Configuration Stripe
-├── hooks/                    # Hooks React personnalisés
-├── types/                    # Définitions TypeScript
-├── public/                   # Fichiers statiques
-├── cypress/                  # Tests e2e Cypress
-└── tests/                    # Tests unitaires Vitest
-```
 
 ## 🧪 Tests
 
@@ -129,35 +99,24 @@ npm run cypress:open
 - **🎫 Gestion des billets**
   - Achat et réservation de billets
   - Génération de QR code pour l'accès aux événements
-  - Historique des achats
-
-- **🔍 Exploration des événements**
-  - Recherche d'événements par date, lieu et discipline
-  - Informations détaillées sur chaque compétition
-  - Calendrier interactif
 
 - **💳 Paiement sécurisé**
   - Intégration avec Stripe pour les paiements
-  - Gestion des remboursements
-  - Factures électroniques
 
 - **👤 Gestion du profil**
   - Authentification utilisateur
-  - Préférences personnalisées
-  - Notifications des événements
 
 - **📱 Support mobile**
   - Interface responsive
   - Scan de QR code via l'appareil photo
-  - Billets électroniques accessibles hors ligne
 
 ## 🔒 Sécurité
 
 L'application implémente plusieurs mesures de sécurité :
 
 - Sanitisation des entrées utilisateur avec DOMPurify
-- Authentification sécurisée
-- Paiements protégés via Stripe
+- Authentification sécurisée avec rate limiter
+- Paiements protégés via Mock Stripe
 - Protection contre les attaques XSS et CSRF
 
 ## 🚀 Déploiement
