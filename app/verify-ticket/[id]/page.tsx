@@ -54,7 +54,7 @@ function VerifyTicketContent() {
             
             try {
                 // Récupérer tous les tickets
-                const response = await fetch(`http://localhost:8080/api/ticket/${qrCodeKey}`, {
+                const response = await fetch(`https://jo-api-9bdf561a2bea.herokuapp.com/api/ticket/${qrCodeKey}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

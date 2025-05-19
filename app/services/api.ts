@@ -18,7 +18,7 @@ export interface PaymentIntent {
     createdAt: number;
 }
 
-const API_URL = 'http://localhost:8080/api';
+const API_URL = 'https://jo-api-9bdf561a2bea.herokuapp.com/api';
 
 export const paymentApi = {
     createPaymentIntent: async (data: CreatePaymentIntentRequest): Promise<CreatePaymentIntentResponse> => {
