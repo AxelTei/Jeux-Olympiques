@@ -155,34 +155,6 @@ export default function Page() {
         }
     }
 
-    // Fonction d'admin simplifiée - sera supprimée en production
-    const handleSubmitAdmin = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setMessage('');
-
-        try {
-            // Utiliser l'URL d'origine
-            const res = await fetch('https://jo-api-9bdf561a2bea.herokuapp.com/auth/signupAdmin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-    
-            if (res.ok) {
-                router.push('/Login?success=true&message=Votre%20compte%20a%20%C3%A9t%C3%A9%20cr%C3%A9%C3%A9%20avec%20succ%C3%A8s');
-            } else {
-                const error = await res.text();
-                setMessage(`Erreur: ${error}`);
-            }
-        } catch (error) {
-            console.error('Erreur:', error);
-            setMessage('Erreur de connexion au serveur. Veuillez réessayer plus tard.');
-        } finally {
-            setIsSubmitting(false);
-        }
-    }
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -333,19 +305,6 @@ export default function Page() {
                             </button>
                         </div>
                     </form>
-                    
-                    {/* Bouton admin - SERA SUPPRIMÉ EN PRODUCTION */}
-                    <div className="mt-6 border-t pt-4">
-                        <h3 className="text-sm font-medium text-gray-700 mb-2">Administration</h3>
-                        <button
-                            disabled={isSubmitting}
-                            className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-100"
-                            onClick={handleSubmitAdmin}
-                        >
-                            {isSubmitting ? 'Traitement...' : 'Enregistrer Admin'}
-                        </button>
-                        <p className="mt-1 text-xs text-gray-500 italic">Ce bouton sera supprimé en production</p>
-                    </div>
                 </div>
             </div>
         </div>
